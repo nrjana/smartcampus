@@ -1,27 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import { 
-  StyleSheet, 
-  Text, 
-  View, 
-  ScrollView, 
-  TouchableOpacity, 
-  SafeAreaView, 
-  Alert,
-  ActivityIndicator 
-} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { supabase } from '../../constants/supabase'; // Импорт supabase
 import { useRouter } from 'expo-router';
-import { useTheme } from '../../constants/context/ThemeContext'; 
-import { useAuth } from '../_layout';
-const { signOut } = useAuth();
+import React, { useEffect, useState } from 'react';
+import {
+  ActivityIndicator,
+  Alert,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
+} from 'react-native';
+import { useAuth } from '../../constants/context/AuthContext';
+import { useTheme } from '../../constants/context/ThemeContext';
+import { supabase } from '../../constants/supabase'; // Импорт supabase
 
 export default function ProfileScreen() {
   const router = useRouter();
-  const { signOut } = useAuth();
   const { theme, isDarkMode } = useTheme();
   const [loading, setLoading] = useState(true);
   const [student, setStudent] = useState<any>(null);
+  const { signOut } = useAuth();
 
   useEffect(() => {
     fetchProfile();
@@ -39,6 +38,7 @@ export default function ProfileScreen() {
     }
   }
 
+  // 3. Обновленная функция выхода
   const handleLogout = async () => {
     Alert.alert(
       "Выход", 
@@ -50,11 +50,13 @@ export default function ProfileScreen() {
           style: "destructive", 
           onPress: async () => {
             try {
-              // 1. Выходим из базы данных
+              // Удаляем сессию из базы
               await supabase.auth.signOut();
               
-              // 2. Вызываем signOut из твоего _layout (он сам сделает переход)
+              // Переключаем глобальный рубильник! 
+              // _layout увидит это и сам перебросит тебя на экран логина
               signOut(); 
+              
             } catch (error) {
               console.log("Ошибка выхода:", error);
             }

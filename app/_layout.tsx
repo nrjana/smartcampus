@@ -1,15 +1,7 @@
-import { Stack, useRouter, useSegments, Slot } from 'expo-router';
-import { useState, createContext, useContext, useEffect } from 'react';
-import { ThemeProvider } from '../constants/context/ThemeContext'; // Проверь путь!
-
-// 1. Твой существующий контекст авторизации
-const AuthContext = createContext({
-  signIn: () => {},
-  signOut: () => {},
-  isLoggedIn: false,
-});
-
-export const useAuth = () => useContext(AuthContext);
+import { Stack, useRouter, useSegments } from 'expo-router';
+import { useEffect, useState } from 'react';
+import { AuthContext } from '../constants/context/AuthContext'; // Импорт из нового файла
+import { ThemeProvider } from '../constants/context/ThemeContext';
 
 export default function RootLayout() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -34,14 +26,13 @@ export default function RootLayout() {
   }, [isLoggedIn, segments, isNavigationReady]);
 
   return (
-    // ОБЕРТКА ТЕМЫ — теперь она главная
     <ThemeProvider>
+      {/* Используем AuthContext из нового файла */}
       <AuthContext.Provider value={{ 
         signIn: () => setIsLoggedIn(true), 
         signOut: () => setIsLoggedIn(false), 
         isLoggedIn 
       }}>
-        {/* Slot или Stack — здесь будет отображаться контент приложения */}
         <Stack screenOptions={{ headerShown: false }} />
       </AuthContext.Provider>
     </ThemeProvider>

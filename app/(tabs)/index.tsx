@@ -1,11 +1,11 @@
-import React, { useEffect, useState, useCallback } from 'react'; // Добавлен useCallback
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, SafeAreaView, ActivityIndicator, RefreshControl } from 'react-native'; // Добавлен RefreshControl
 import { Ionicons } from '@expo/vector-icons';
-import { supabase } from '../../constants/supabase';
 import { useRouter } from 'expo-router';
+import React, { useCallback, useEffect, useState } from 'react'; // Добавлен useCallback
+import { ActivityIndicator, RefreshControl, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'; // Добавлен RefreshControl
+import { supabase } from '../../constants/supabase';
 // Импортируем наш глобальный контекст темы
-import { useTheme } from '../../constants/context/ThemeContext'; 
-
+import AIChatBubble from '../../components/AIChatBubble';
+import { useTheme } from '../../constants/context/ThemeContext';
 export default function Index() {
   const router = useRouter();
   
@@ -198,7 +198,7 @@ export default function Index() {
             </TouchableOpacity>
           ))}
         </View>
-
+      <AIChatBubble />
       </ScrollView>
     </SafeAreaView>
   );

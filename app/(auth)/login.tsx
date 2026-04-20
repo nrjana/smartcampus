@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import { 
-  StyleSheet, 
-  Text, 
-  View, 
-  TextInput, 
-  TouchableOpacity, 
-  KeyboardAvoidingView, 
+import {
+  KeyboardAvoidingView,
   Platform,
-  Image 
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View
 } from 'react-native';
-import { useAuth } from '../_layout'; // Импортируем наш хук
+import { useAuth } from '../../constants/context/AuthContext'; // Импортируем наш хук
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
